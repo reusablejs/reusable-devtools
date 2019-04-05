@@ -1,5 +1,5 @@
 {
-  "name": "react-devtools-experimental",
-  "alias": ["react-devtools-experimental"],
+  "name": "reusable-devtools-experimental",
+  "alias": ["reusable-devtools-experimental"],
   "files": ["index.html", "build"]
 }

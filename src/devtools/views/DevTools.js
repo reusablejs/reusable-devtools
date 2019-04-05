@@ -1,16 +1,7 @@
 // @flow
 
 import React, { useEffect, useState } from 'react';
-import Store from '../store';
-import { BridgeContext, StoreContext } from './context';
-import Components from './Components/Components';
-import Profiler from './Profiler/Profiler';
-import Settings from './Settings/Settings';
-import TabBar from './TabBar';
-import { SettingsContextController } from './Settings/SettingsContext';
-import { TreeContextController } from './Components/TreeContext';
-import { ProfilerContextController } from './Profiler/ProfilerContext';
-import ReactLogo from './ReactLogo';
+import { BridgeContext } from './context';
 
 import styles from './DevTools.css';
 
@@ -45,28 +36,6 @@ export type Props = {|
   settingsPortalContainer?: Element,
 |};
 
-const componentsTab = {
-  id: ('components': TabID),
-  icon: 'components',
-  label: 'Components',
-  title: 'React Components',
-};
-const profilerTab = {
-  id: ('profiler': TabID),
-  icon: 'profiler',
-  label: 'Profiler',
-  title: 'React Profiler',
-};
-const settingsTab = {
-  id: ('settings': TabID),
-  icon: 'settings',
-  label: 'Settings',
-  title: 'React Settings',
-};
-
-const tabsWithProfiler = [componentsTab, profilerTab, settingsTab];
-const tabsWithoutProfiler = [componentsTab, settingsTab];
-
 export default function DevTools({
   bridge,
   browserName,
@@ -80,90 +49,7 @@ export default function DevTools({
   store,
   viewElementSource = null,
 }: Props) {
-  const [tab, setTab] = useState(defaultTab);
-  if (overrideTab != null && overrideTab !== tab) {
-    setTab(overrideTab);
-  }
-
-  const [supportsProfiling, setSupportsProfiling] = useState(
-    store.supportsProfiling
-  );
-
-  // Show/hide the "Profiler" button depending on if profiling is supported.
-  useEffect(() => {
-    if (supportsProfiling !== store.supportsProfiling) {
-      setSupportsProfiling(store.supportsProfiling);
-    }
-
-    const handleRoots = () => {
-      if (supportsProfiling !== store.supportsProfiling) {
-        setSupportsProfiling(store.supportsProfiling);
-      }
-    };
-
-    store.addListener('roots', handleRoots);
-    return () => {
-      store.removeListener('roots', handleRoots);
-    };
-  }, [store, supportsProfiling]);
-
-  let tabElement;
-  switch (tab) {
-    case 'profiler':
-      tabElement = (
-        <Profiler
-          portalContainer={profilerPortalContainer}
-          supportsProfiling={supportsProfiling}
-        />
-      );
-      break;
-    case 'settings':
-      tabElement = <Settings portalContainer={settingsPortalContainer} />;
-      break;
-    case 'components':
-    default:
-      tabElement = <Components portalContainer={componentsPortalContainer} />;
-      break;
-  }
-
   return (
-    <BridgeContext.Provider value={bridge}>
-      <StoreContext.Provider value={store}>
-        <SettingsContextController
-          browserTheme={browserTheme}
-          componentsPortalContainer={componentsPortalContainer}
-          profilerPortalContainer={profilerPortalContainer}
-          settingsPortalContainer={settingsPortalContainer}
-        >
-          <TreeContextController viewElementSource={viewElementSource}>
-            <ProfilerContextController>
-              <div className={styles.DevTools}>
-                {showTabBar && (
-                  <div className={styles.TabBar}>
-                    <ReactLogo />
-                    <span className={styles.DevToolsVersion}>
-                      {process.env.DEVTOOLS_VERSION}
-                    </span>
-                    <div className={styles.Spacer} />
-                    <TabBar
-                      currentTab={tab}
-                      id="DevTools"
-                      selectTab={setTab}
-                      size="large"
-                      tabs={
-                        supportsProfiling
-                          ? tabsWithProfiler
-                          : tabsWithoutProfiler
-                      }
-                    />
-                  </div>
-                )}
-                <div className={styles.TabContent}>{tabElement}</div>
-              </div>
-            </ProfilerContextController>
-          </TreeContextController>
-        </SettingsContextController>
-      </StoreContext.Provider>
-    </BridgeContext.Provider>
+    <BridgeContext.Provider value={bridge}>Hello world</BridgeContext.Provider>
   );
 }
