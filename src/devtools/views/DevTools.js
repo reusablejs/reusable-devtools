@@ -2,12 +2,16 @@
 
 import React, { useEffect, useState } from 'react';
 import { BridgeContext } from './context';
+import Button from './devui/Button/Button';
+import Tabs from './devui/Tabs/Tabs';
+import '../utils/diff';
 
 import styles from './DevTools.css';
 
 import './root.css';
 
 import type { Bridge } from '../../types';
+import Inspector from 'src/devtools/views/Components/Inspector/Inspector';
 
 export type BrowserName = 'Chrome' | 'Firefox';
 export type BrowserTheme = 'dark' | 'light';
@@ -50,6 +54,8 @@ export default function DevTools({
   viewElementSource = null,
 }: Props) {
   return (
-    <BridgeContext.Provider value={bridge}>Hello world</BridgeContext.Provider>
+    <BridgeContext.Provider value={bridge}>
+        <Inspector />
+    </BridgeContext.Provider>
   );
 }

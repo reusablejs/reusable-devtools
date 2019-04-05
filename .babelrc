@@ -1,7 +1,8 @@
 {
   "plugins": [
     ["@babel/plugin-transform-flow-strip-types"],
-    ["@babel/plugin-proposal-class-properties", { "loose": false }]
+    ["@babel/plugin-proposal-class-properties", { "loose": false }],
+    ["@babel/plugin-syntax-export-default-from"]
   ],
   "presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-flow"]
 }
